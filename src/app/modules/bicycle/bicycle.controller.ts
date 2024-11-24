@@ -15,28 +15,28 @@ const createBicycleShop = async (req: Request, res: Response) => {
     }
   };
 
-
-  const getAllProducts = async (req: Request, res: Response) => {
+// getAllBicycle
+  const getAllBicycle = async (req: Request, res: Response) => {
     try {
       const result = await bicycleServices.getAllBicycleIntoDB();
   
       res.status(200).json({
         success: true,
-        message: 'products are retrieved successfully',
+        message: 'Bicycles retrieved successfully',
         data: result,
       });
     } catch (err) {
       console.log(err);
     }
   };
-
-  const getSingleProducts = async (req:Request, res:Response)=>{
+  // getSingleBicycle
+  const getSingleBicycle = async (req:Request, res:Response)=>{
     try{
       const product = req.params._id
       const result = await bicycleServices.getSingleBicycleIntoDB(product)
       res.status(200).json({
         success:true,
-        massage:"product data get successfully",
+        massage:"Bicycle retrieved successfully",
         data:result
       })
     }
@@ -44,9 +44,44 @@ const createBicycleShop = async (req: Request, res: Response) => {
       console.log(err);
     }
   }
+// updateBicycle
+const updateBicycle = async (req:Request, res:Response)=>{
+  try{
+    const productId = req.params._id
+    const body = req.body;
+    const result = await bicycleServices.updateBicycle(productId,body)
+    res.status(200).json({
+      success:true,
+      massage:"Bicycle updated successfully",
+      data:result
+    })
+  }
+  catch(err){
+    console.log(err);
+  }
+}
+
+// delete bicycle
+const deleteBicycle = async (req:Request, res:Response)=>{
+  try{
+    const productId = req.params._id
+    const result = await bicycleServices.deleteBicycle(productId)
+    res.status(200).json({
+      success:true,
+      massage:"Bicycle delete successfully",
+      data:result
+    })
+  }
+  catch(err){
+    console.log(err);
+  }
+}
+
 
  export const bicycleController ={
     createBicycleShop,
-    getAllProducts,
-    getSingleProducts,
+    getAllBicycle,
+    getSingleBicycle,
+    updateBicycle,
+    deleteBicycle
   }
